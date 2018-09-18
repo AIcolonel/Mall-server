@@ -273,4 +273,27 @@ router.get('/backDetail',(req,res)=>{
     })
 })
 
+//后台：去发货
+router.put('/setOrder',(req,res)=>{
+    let orderNo=req.body.orderNo;
+    OrderModel.findOneAndUpdate(
+        {orderNo:orderNo},//查询条件
+        {status:40,statusDesc:"已发货"},//需要更新的内容
+        {new:true}//true:返回更新后的数据,false:返回未更新前的数据
+        )
+    .then(order=>{
+        res.json({
+            code:0,
+            data:order
+        })  
+    })
+    .catch(e=>{
+        console.log(e);
+         res.json({
+            code:1,
+            message:'后台：发货失败'
+        })
+    })
+})
+
 module.exports=router;

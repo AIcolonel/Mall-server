@@ -1,15 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Mall=require('../models/mall.js');
-const Comment=require('../models/comment.js');
+const OrderModel=require('../models/order.js');
+const Goods=require('../models/goods.js');
 const paging=require('../util/paging.js');
 const fs=require('fs');
 const path=require('path');
 const hmac=require('../util/hmac.js');
-
-//引用上传文件包
-const multer = require('multer');
-const upload = multer({ dest: 'static/uploads/' });
 
 //插入管理员信息
 /*
@@ -69,13 +66,22 @@ router.use((req,res,next)=>{
 
 // 获取用户列表信息路由
 router.get('/count',(req,res)=>{
-	res.json({
-		code:0,
-		data:{
-			usernumber:3000,
-			countnumber:301,
-			goodsnumber:302
-		}
+	Mall.estimatedDocumentCount()
+	.then(usernumber=>{
+		Goods.estimatedDocumentCount()
+		.then(goodsnumber=>{
+			OrderModel.estimatedDocumentCount()
+			.then(countnumber=>{
+				res.json({
+					code:0,
+					data:{
+						usernumber:usernumber,
+						countnumber:countnumber,
+						goodsnumber:goodsnumber
+					}
+				})
+			})
+		})
 	})
 })
 

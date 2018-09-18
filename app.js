@@ -66,8 +66,6 @@ app.use(bodyParser.json())
  
 //5.处理路由
  
-// 显示首页
-app.use('/',require('./router/index.js'));
  
 // 处理用户注册,登录请求
 app.use('/user',require('./router/user.js'));
@@ -78,17 +76,8 @@ app.use('/admin',require('./router/admin.js'));
 // 处理分类管理路由
 app.use('/category',require('./router/category.js'));
 
-//处理文章管理路由
-app.use('/article',require('./router/article.js'));
-
-// 处理评论路由
-app.use('/comment',require('./router/comment.js'));
-
 //处理新增资源路由
 app.use('/resource',require('./router/resource.js'));
-
-//处理用户信息中心首页路由
-app.use('/home',require('./router/home.js'));
 
 //处理商品信息路由
 app.use('/goods',require('./router/goods.js'));
